@@ -6,7 +6,7 @@
 #include <math.h> //para elevar ao quadrado e tirar raiz
 #include <time.h>
 
-#define MAXVET 50
+#define MAXVET 5000
 #define IP "127.0.0.1"
 #define PORT 8080
 
@@ -26,7 +26,7 @@ int main(int argc, char* argv[]) {
 	// Inicializar vetor
 	init_vet();
 
-	// imprime pizza
+	// imprime vetor
 	for (int i = 0; i < MAXVET; i++) {
 		printf("%0.2f\n", v[i]);
 	}
