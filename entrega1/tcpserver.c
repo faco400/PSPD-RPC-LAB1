@@ -4,7 +4,7 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
-#define MAXVET 5000
+#define MAXVET 12500
 
 #define PORT 8080
 
@@ -57,21 +57,25 @@ int main(int argc, char* argv[]) {
 	puts("Connection accepted");
 
 	// Recebe mensagem do cliente
-	if ((read_size = recv(client_sock, &message, MAXVET * sizeof(float), 0)) > 0) {
-		
-		res[0] = min(message); // descobbre min
-		res[1] = max(message); // descobre max
+	int n_package = 40;
+	while(n_package > 0){
+		if ((read_size = recv(client_sock, &message, MAXVET * sizeof(float), 0)) > 0) {
+			
+			res[0] = min(message); // descobbre min
+			res[1] = max(message); // descobre max
 
-		// enviando vetor resposta para o cliente
-		write(client_sock, &res, 2 * sizeof(float));
-	}
+			// enviando vetor resposta para o cliente
+			write(client_sock, &res, 2 * sizeof(float));
+		}
 
-	// se cliente não mandou nada desconecta ou se houver erro avisa
-	if (read_size == 0) {
-		puts("Client disconnected");
-	}
-	else if (read_size == -1) {
-		perror("recv failed");
+		// se cliente não mandou nada desconecta ou se houver erro avisa
+		if (read_size == 0) {
+			puts("Client disconnected");
+		}
+		else if (read_size == -1) {
+			perror("recv failed");
+		}
+		n_package--;
 	}
 
 	return 0;

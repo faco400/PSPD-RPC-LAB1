@@ -5,7 +5,7 @@
  */
 
 #include "labrpc.h"
-#define MAXVET 50
+#define MAXVET 500000
 
 float *
 max_100_svc(vetor *argp, struct svc_req *rqstp)
@@ -13,8 +13,7 @@ max_100_svc(vetor *argp, struct svc_req *rqstp)
 	static float  result;
 
 	int i;
-	float n;
-	n = argp->v[0];
+	float n = argp->v[0];
 	for(i = 1; i < MAXVET; i++) {
 		if(argp->v[i] > n)
 			n = argp->v[i];
@@ -33,7 +32,7 @@ min_100_svc(vetor *argp, struct svc_req *rqstp)
 	float n;
 	n = argp->v[0];
 	for(i = 1; i < MAXVET; i++) {
-		if(argp->v[i] > n)
+		if(argp->v[i] < n)
 			n = argp->v[i];
 	}
 	result = n;

@@ -9,41 +9,10 @@
 #include <math.h> //para elevar ao quadrado e tirar raiz
 #include <time.h>
 
-#define MAXVET 50
+#define MAXVET 500000
 
 void init_vet ();
 float f_aleat(int );  
-
-
-// void
-// entrega1_100(char *host)
-// {
-// 	CLIENT *clnt;
-// 	float  *result_1;
-// 	float  max_100_arg;
-// 	float  *result_2;
-// 	float  min_100_arg;
-
-// #ifndef	DEBUG
-// 	clnt = clnt_create (host, ENTREGA1, VERSAO, "udp");
-// 	if (clnt == NULL) {
-// 		clnt_pcreateerror (host);
-// 		exit (1);
-// 	}
-// #endif	/* DEBUG */
-
-// 	result_1 = max_100(&max_100_arg, clnt);
-// 	if (result_1 == (float *) NULL) {
-// 		clnt_perror (clnt, "call failed");
-// 	}
-// 	result_2 = min_100(&min_100_arg, clnt);
-// 	if (result_2 == (float *) NULL) {
-// 		clnt_perror (clnt, "call failed");
-// 	}
-// #ifndef	DEBUG
-// 	clnt_destroy (clnt);
-// #endif	 /* DEBUG */
-// }
 
 vetor vet;
 
@@ -53,14 +22,12 @@ main (int argc, char *argv[])
 	CLIENT *clnt;
 	char *host;
 
-	// if (argc < 2) {
-	// 	printf ("usage: %s server_host\n", argv[0]);
-	// 	exit (1);
-	// }
-	// host = argv[1];
-	// entrega1_100 (host);
+	if (argc < 2) {
+		printf ("usage: %s server_host\n", argv[0]);
+		exit (1);
+	}
 
-	clnt = clnt_create(argv[1], ENTREGA1, VERSAO, "udp");
+	clnt = clnt_create(argv[1], ENTREGA1, VERSAO, "tcp");
 	/* Garantindo a criacao da ligacao com o remoto */
 	if (clnt == (CLIENT *) NULL) {
 		clnt_pcreateerror(argv[1]);
@@ -76,17 +43,13 @@ main (int argc, char *argv[])
 	// Inicializar vetor
 	init_vet();
 
-	// imprime vetor
-	for (int i = 0; i < MAXVET; i++) {
-		printf("%0.2f\n", vet.v[i]);
-	}
-
 	/* Chama o stub cliente criado pelo rpcgen */
 	server_reply[0] = *(min_100(&vet,clnt));
 	if (server_reply==NULL) {
 		fprintf(stderr,"Problema na chamada RPC\n");
 	exit(0); 
 	}
+
 
 	/* Chama o stub cliente criado pelo rpcgen */
 	server_reply[1] = *(max_100(&vet,clnt));
@@ -97,11 +60,8 @@ main (int argc, char *argv[])
 
 	//Escrevendo resposta do servidor
 	puts("Server reply :\n");
-	for (int i = 0; i < 2; i++) {
-		printf("%0.2f\n", server_reply[i]);
-	}
-
-	// return(*server_reply);
+	printf("Menor: %0.2f\n", server_reply[0]);
+	printf("Maior: %0.2f\n", server_reply[1]);
 
 exit (0);
 }

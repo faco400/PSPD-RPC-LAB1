@@ -15,7 +15,7 @@ extern "C" {
 
 
 struct vetor {
-	float v[50];
+	float v[500000];
 };
 typedef struct vetor vetor;
 

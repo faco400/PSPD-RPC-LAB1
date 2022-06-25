@@ -1,4 +1,4 @@
-#define MAXVET 50
+#define MAXVET 500000
 
 struct vetor {
   float v[MAXVET];
