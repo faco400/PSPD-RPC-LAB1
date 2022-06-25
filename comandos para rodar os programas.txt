@@ -1,0 +1,15 @@
+Em ambos os casos sempre rodar o servidor primeiro e na mesma máquina
+Rodar os comandos dentro da pasta entrega1
+
+TCP:
+no servidor:
+gcc tcpserver.c -o tcpserver && ./tcpserver
+no cliente:
+gcc tcpclient.c -o tcpclient -lm && ./tcpclient 
+
+
+RPC: make
+no servidor:
+./labrpc_server
+no cliente:
+./labrpc_client 127.0.0.1
